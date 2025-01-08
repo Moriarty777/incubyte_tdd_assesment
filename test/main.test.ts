@@ -4,7 +4,11 @@ describe("add", () => {
   it("should return 0 for an empty string", () => {
     expect(add("")).toBe(0);
   });
-  test.todo("should return the number itself for a single number string");
+
+  it("should return the number itself for a single number string", () => {
+    expect(add("7")).toBe(7);
+  });
+
   test.todo(
     "should return the sum of two numbers for a string with two numbers"
   );

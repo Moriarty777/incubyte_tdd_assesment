@@ -3,5 +3,9 @@ export function add(numbers: string): number {
     return 0;
   }
 
+  if (!numbers.includes(",")) {
+    return parseInt(numbers, 10);
+  }
+
   return -1;
 }
