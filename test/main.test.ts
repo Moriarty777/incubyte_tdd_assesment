@@ -24,7 +24,12 @@ describe("add", () => {
     expect(add("1\n2,3\n4")).toBe(10);
   });
 
-  test.todo("should support custom delimiters");
+  test("should support custom delimiters", () => {
+    expect(add("//;\n1;2;3")).toBe(6);
+    expect(add("//|\n4|5|6")).toBe(15);
+    expect(add("//&\n7&8&9")).toBe(24);
+  });
+
   test.todo("should throw an exception for negative numbers");
   test.todo("should include all negative numbers in the exception message");
 });
