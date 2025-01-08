@@ -7,5 +7,6 @@ export function add(numbers: string): number {
     return parseInt(numbers, 10);
   }
 
-  return -1;
+  const nums = numbers.split(",").map((num) => parseInt(num, 10));
+  return nums[0] + nums[1];
 }
