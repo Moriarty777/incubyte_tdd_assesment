@@ -13,7 +13,11 @@ describe("add", () => {
     expect(add("2,5")).toBe(7);
   });
 
-  test.todo("should handle any number of numbers");
+  test("should handle any number of numbers", () => {
+    expect(add("2,2,3")).toBe(7);
+    expect(add("4,5,7,7")).toBe(23);
+  });
+
   test.todo("should handle new lines as delimiters");
   test.todo("should support custom delimiters");
   test.todo("should throw an exception for negative numbers");
