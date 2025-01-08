@@ -18,7 +18,12 @@ describe("add", () => {
     expect(add("4,5,7,7")).toBe(23);
   });
 
-  test.todo("should handle new lines as delimiters");
+  test("should handle new lines as delimiters", () => {
+    expect(add("1\n2,3")).toBe(6);
+    expect(add("2\n2\n3")).toBe(7);
+    expect(add("1\n2,3\n4")).toBe(10);
+  });
+
   test.todo("should support custom delimiters");
   test.todo("should throw an exception for negative numbers");
   test.todo("should include all negative numbers in the exception message");
