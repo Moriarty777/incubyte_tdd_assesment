@@ -44,4 +44,9 @@ describe("add", () => {
     expect(add("1001")).toBe(0);
     expect(add("1,2,1001,3")).toBe(6);
   });
+
+  test("should handle single delimiter of any length", () => {
+    expect(add("//[***]\n2***3***2")).toBe(7);
+    expect(add("//[##]\n4##5##1")).toBe(10);
+  });
 });

@@ -22,11 +22,23 @@ export function add(numbers: string): number {
   // If custom delimiter is present
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
-    const delimiter = numbers.slice(2, delimiterEndIndex);
+    const customDelimiterPart = numbers.slice(2, delimiterEndIndex);
+
+    let delimiter: string;
+    if (
+      customDelimiterPart.startsWith("[") &&
+      customDelimiterPart.endsWith("]")
+    ) {
+      delimiter = customDelimiterPart.slice(1, -1); // Remove the square brackets
+    } else {
+      delimiter = customDelimiterPart; // Single character delimiter without brackets
+    }
+
+    const escapedDelimiter = delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
     const numbersWithoutDelimiter = numbers.slice(delimiterEndIndex + 1);
     const nums = numbersWithoutDelimiter
-      .split(delimiter)
+      .split(new RegExp(escapedDelimiter))
       .map((num) => Number(num))
       .filter((num) => num <= 1000);
     checkForNegatives(nums);
