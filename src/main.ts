@@ -16,7 +16,7 @@ export function add(numbers: string): number {
   if (!numbers.includes(",") && !numbers.includes("\n")) {
     const num = parseInt(numbers, 10);
     checkForNegatives([num]);
-    return num;
+    return num > 1000 ? 0 : num;
   }
 
   // If custom delimiter is present
@@ -27,13 +27,17 @@ export function add(numbers: string): number {
     const numbersWithoutDelimiter = numbers.slice(delimiterEndIndex + 1);
     const nums = numbersWithoutDelimiter
       .split(delimiter)
-      .map((num) => Number(num));
+      .map((num) => Number(num))
+      .filter((num) => num <= 1000);
     checkForNegatives(nums);
     return nums.reduce((sum, num) => sum + num, 0);
   }
 
   // Default case for comma and newline seperated numbers
-  const nums = numbers.split(/[,\n]+/).map((num) => Number(num));
+  const nums = numbers
+    .split(/[,\n]+/)
+    .map((num) => Number(num))
+    .filter((num) => num <= 1000);
   checkForNegatives(nums);
   return nums.reduce((sum, num) => sum + num, 0);
 }
