@@ -1,16 +1,25 @@
 export function add(numbers: string): number {
+  //Return 0 for empty strings
   if (numbers === "") {
     return 0;
   }
 
+  // Check for negative number function
+  const checkForNegatives = (nums: number[]) => {
+    const negativeNumbers = nums.filter((num) => num < 0);
+    if (negativeNumbers.length > 0) {
+      throw new Error(`Negatives not allowed: ${negativeNumbers.join(", ")}`);
+    }
+  };
+
+  // Return same number if no delimiter present
   if (!numbers.includes(",") && !numbers.includes("\n")) {
     const num = parseInt(numbers, 10);
-    if (num < 0) {
-      throw new Error(`Negatives not allowed: ${num}`);
-    }
+    checkForNegatives([num]);
     return num;
   }
 
+  // If custom delimiter is present
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
     const delimiter = numbers.slice(2, delimiterEndIndex);
@@ -18,20 +27,13 @@ export function add(numbers: string): number {
     const numbersWithoutDelimiter = numbers.slice(delimiterEndIndex + 1);
     const nums = numbersWithoutDelimiter
       .split(delimiter)
-      .map((num) => parseInt(num, 10));
-
-    const negativeNumbers = nums.filter((num) => num < 0);
-    if (negativeNumbers.length > 0) {
-      throw new Error(`Negatives not allowed: ${negativeNumbers.join(", ")}`);
-    }
-
+      .map((num) => Number(num));
+    checkForNegatives(nums);
     return nums.reduce((sum, num) => sum + num, 0);
   }
 
-  const nums = numbers.split(/[,\n]+/).map((num) => parseInt(num, 10));
-  const negativeNumbers = nums.filter((num) => num < 0);
-  if (negativeNumbers.length > 0) {
-    throw new Error(`Negatives not allowed: ${negativeNumbers.join(", ")}`);
-  }
+  // Default case for comma and newline seperated numbers
+  const nums = numbers.split(/[,\n]+/).map((num) => Number(num));
+  checkForNegatives(nums);
   return nums.reduce((sum, num) => sum + num, 0);
 }

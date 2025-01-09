@@ -9,7 +9,7 @@ describe("add", () => {
     expect(add("7")).toBe(7);
   });
 
-  test("should return the sum of two comma-separated numbers", () => {
+  test("should handle two comma-separated numbers", () => {
     expect(add("2,5")).toBe(7);
   });
 
@@ -37,6 +37,4 @@ describe("add", () => {
     expect(() => add("//;\n1;-2;3")).toThrow("Negatives not allowed: -2");
     expect(add("1,2,3")).toBe(6);
   });
-
-  test.todo("should include all negative numbers in the exception message");
 });
