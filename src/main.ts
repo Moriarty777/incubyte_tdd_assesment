@@ -24,21 +24,24 @@ export function add(numbers: string): number {
     const delimiterEndIndex = numbers.indexOf("\n");
     const customDelimiterPart = numbers.slice(2, delimiterEndIndex);
 
-    let delimiter: string;
+    let delimiter: string[];
     if (
       customDelimiterPart.startsWith("[") &&
       customDelimiterPart.endsWith("]")
     ) {
-      delimiter = customDelimiterPart.slice(1, -1); // Remove the square brackets
+      delimiter = customDelimiterPart.slice(1, -1).split("]["); // Extract multiple delimiters if present
     } else {
-      delimiter = customDelimiterPart; // Single character delimiter without brackets
+      delimiter = [customDelimiterPart]; // Single character delimiter without brackets
     }
 
-    const escapedDelimiter = delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escapedDelimiters = delimiter.map((delim) =>
+      delim.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    ); // Escape special regex characters
+    const delimiterRegex = new RegExp(escapedDelimiters.join("|"), "g");
 
     const numbersWithoutDelimiter = numbers.slice(delimiterEndIndex + 1);
     const nums = numbersWithoutDelimiter
-      .split(new RegExp(escapedDelimiter))
+      .split(new RegExp(delimiterRegex))
       .map((num) => Number(num))
       .filter((num) => num <= 1000);
     checkForNegatives(nums);

@@ -49,4 +49,10 @@ describe("add", () => {
     expect(add("//[***]\n2***3***2")).toBe(7);
     expect(add("//[##]\n4##5##1")).toBe(10);
   });
+
+  test("should handle multiple delimiters of any length", () => {
+    expect(add("//[*][%]\n1*2%3")).toBe(6);
+    expect(add("//[***][###]\n1***2###3")).toBe(6);
+    expect(add("//[**][%%]\n4**5%%6")).toBe(15);
+  });
 });
